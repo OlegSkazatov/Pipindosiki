@@ -6,7 +6,7 @@ import threading
 from socket import *
 
 host = '26.112.25.183'
-port = 26795
+port = 777
 addr = (host, port)
 udp_socket = socket(AF_INET, SOCK_DGRAM)
 
@@ -60,6 +60,16 @@ def playsound_command(update: Update, context: CallbackContext) -> None:
     update.message.reply_text(f"Воспроизведён звук '{sound}'. А может и нет. Я чё, ебу?")
 
 
+def open_command(update: Update, context: CallbackContext) -> None:
+    if len(update.message.text.split()) == 1:
+        name = ""
+    name = update.message.text.split()[1]
+    if ".jpg" not in name and ".png" not in name and ".gif" not in name:
+        name = name.split(".")[0] + ".jpg"
+    sendPacket("open;" + name)
+    update.message.reply_text(f"Открыт файл '{name}'. А может и нет. Я чё, ебу?")
+
+
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
     update.message.reply_text(update.message.text)
@@ -67,12 +77,13 @@ def echo(update: Update, context: CallbackContext) -> None:
 
 def main() -> None:
     """Start the bot."""
-    updater = Updater("Ваня соси письку")
+    updater = Updater("2025798666:AAHqa8W5Pwgk-4EFR40bZ1Fm5BJC9RozO-8")
 
     dispatcher = updater.dispatcher
 
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("playsound", playsound_command))
+    dispatcher.add_handler(CommandHandler("open", open_command))
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     updater.start_polling()
