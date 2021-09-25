@@ -78,7 +78,7 @@ def echo(update: Update, context: CallbackContext) -> None:
 
 def main() -> None:
     """Start the bot."""
-    updater = Updater("2025798666:AAHqa8W5Pwgk-4EFR40bZ1Fm5BJC9RozO-8")
+    updater = Updater("нет")
 
     dispatcher = updater.dispatcher
 
