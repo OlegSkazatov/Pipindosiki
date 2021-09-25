@@ -20,7 +20,7 @@ def load_image(name):
     fullname = os.path.join(name)
     if not os.path.isfile(fullname):
         print(f"Файл с изображением '{fullname}' не найден")
-        sys.exit()
+        return None
     image = pygame.image.load(fullname)
     return image
 
@@ -37,7 +37,11 @@ def pyhgame_window(image_name=None):
         image = None
     else:
         image = load_image(f"data{os.sep}{image_name}")
-        width, height = image.get_width(), image.get_height()
+        if image is None:
+            infoObject = pygame.display.Info()
+            width, height = infoObject.current_w, infoObject.current_h
+        else:
+            width, height = image.get_width(), image.get_height()
     size = width, height
     screen = pygame.display.set_mode(size)
     screen.fill((0, 0, 0))
@@ -95,6 +99,7 @@ class MyUDPHandler(DatagramRequestHandler):  # Обработка пакетов
             except Exception:
                 user.sendPacket(socket, "error;Ты еблан?")
         if action == "open":
+            print(packet)
             if len(packet.split(";")) == 1:
                 image_name = None
             else:

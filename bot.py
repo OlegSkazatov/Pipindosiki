@@ -63,7 +63,8 @@ def playsound_command(update: Update, context: CallbackContext) -> None:
 def open_command(update: Update, context: CallbackContext) -> None:
     if len(update.message.text.split()) == 1:
         name = ""
-    name = update.message.text.split()[1]
+    else:
+        name = update.message.text.split()[1]
     if ".jpg" not in name and ".png" not in name and ".gif" not in name:
         name = name.split(".")[0] + ".jpg"
     sendPacket("open;" + name)
